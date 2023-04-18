@@ -69,8 +69,17 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/updateProject/**").permitAll()
                 .requestMatchers("/api/deleteProject/**").permitAll()
                 .requestMatchers("/api/projectById/**").permitAll()
+                .requestMatchers("/api/createObjectif").permitAll()
+                .requestMatchers("/api/updateObjectif/**").permitAll()
+                .requestMatchers("/api/deleteObjectif/**").permitAll()
+                .requestMatchers("/api/objectifs").permitAll()
+                .requestMatchers("/api/auth/login/**").permitAll()
+                .requestMatchers("/api/users").permitAll()
+                .requestMatchers("/api/userById/**").permitAll()
 
-                .anyRequest().authenticated();
+
+                .anyRequest().authenticated()
+        .and().csrf().disable();
 
         http.authenticationProvider(authenticationProvider());
 

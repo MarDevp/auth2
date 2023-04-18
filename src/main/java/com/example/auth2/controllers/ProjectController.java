@@ -26,7 +26,7 @@ import com.example.auth2.repository.ProjectRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:8081", maxAge = 3600,  allowCredentials="true")
 @RestController
 @RequestMapping("/api")
 public class ProjectController {

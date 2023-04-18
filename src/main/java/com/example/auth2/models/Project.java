@@ -3,6 +3,9 @@ package com.example.auth2.models;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 
 @Entity
@@ -46,7 +49,7 @@ public class Project {
 
 
     @Column( name = "monnaie_projet")
-    private double monnaie_projet;
+    private String monnaie_projet;
 
 
     @Column(name = "taux_rent_eco")
@@ -67,7 +70,22 @@ public class Project {
 
     @Column(name = "stade")
     private String stade;
+/*
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "membre_projet",
+            joinColumns = @JoinColumn(name = "id_projet"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
 
+    private Set<User> users = new HashSet<>();
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+    */
 
     public String getMaitre_oeuvre() {
         return maitre_oeuvre;
@@ -85,11 +103,11 @@ public class Project {
         this.maitre_ouvrage = maitre_ouvrage;
     }
 
-    public double getMonnaie_projet() {
+    public String getMonnaie_projet() {
         return monnaie_projet;
     }
 
-    public void setMonnaie_projet(double monnaie_projet) {
+    public void setMonnaie_projet(String monnaie_projet) {
         this.monnaie_projet = monnaie_projet;
     }
 
@@ -153,7 +171,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(int id_projet, String code_projet, String intitule_projet, String description_projet, Date dateDeb_projet, Date dateFin_projet, String statut_projet, int id_theme_projet, String maitre_oeuvre, String maitre_ouvrage, double monnaie_projet, double taux_rent_eco, double cout_total, double taux_rent_interneInit, String observations, String secteur, String stade) {
+    public Project(int id_projet, String code_projet, String intitule_projet, String description_projet, Date dateDeb_projet, Date dateFin_projet, String statut_projet, int id_theme_projet, String maitre_oeuvre, String maitre_ouvrage, String monnaie_projet, double taux_rent_eco, double cout_total, double taux_rent_interneInit, String observations, String secteur, String stade) {
         this.id_projet = id_projet;
         this.code_projet = code_projet;
         this.intitule_projet = intitule_projet;
@@ -253,4 +271,12 @@ public class Project {
                 ", stade='" + stade + '\'' +
                 '}';
     }
+
+
+    @PrePersist
+    private void persistCreatedDate() {
+        this.code_projet = UUID.randomUUID().toString().substring(0,4).toUpperCase();
+
+    }
+
 }

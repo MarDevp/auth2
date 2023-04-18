@@ -14,23 +14,24 @@ public class TestController {
     public String allAccess() {
         return "Public Content.";
     }
-
+/*
     @GetMapping("/observateur")
     @PreAuthorize("hasRole('GESTIONNAIRE') or hasRole('EVALUATEUR') or hasRole('ADMIN') or hasRole('OBSERVATEUR')")
     public String observateurAccess() {
         return "Observateur Content.";
     }
+    */
 
-    @GetMapping("/evaluateur")
-    @PreAuthorize("hasRole('EVALUATEUR')")
-    public String evaluateurAccess() {
-        return "Evaluateur Board.";
+    @GetMapping("/dirigeant")
+    @PreAuthorize("hasRole('DIRIGEANT')")
+    public String dirigeantAccess() {
+        return "Dirigeant Board.";
     }
 
-    @GetMapping("/gestionnaire")
-    @PreAuthorize("hasRole('GESTIONNAIRE')")
-    public String gestionnaireAccess() {
-        return "Gestionnaire Board.";
+    @GetMapping("/membre")
+    @PreAuthorize("hasRole('MEMBRE')")
+    public String membreAccess() {
+        return "Membre Board.";
     }
 
     @GetMapping("/admin")

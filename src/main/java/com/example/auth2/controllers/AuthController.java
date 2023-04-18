@@ -95,9 +95,9 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role observateurRole = roleRepository.findByName(Erole.ROLE_OBSERVATEUR)
+            Role membreRole = roleRepository.findByName(Erole.ROLE_MEMBRE)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(observateurRole);
+            roles.add(membreRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
@@ -107,23 +107,17 @@ public class AuthController {
                         roles.add(adminRole);
 
                         break;
-                    case "evaluateur":
-                        Role evaluateurRole = roleRepository.findByName(Erole.ROLE_EVALUATEUR)
+                    case "dirigeant":
+                        Role dirigeantRole = roleRepository.findByName(Erole.ROLE_DIRIGEANT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(evaluateurRole);
+                        roles.add(dirigeantRole);
 
                         break;
 
-                    case "gestionnaire":
-                        Role gestionnaireRole = roleRepository.findByName(Erole.ROLE_GESTIONNAIRE)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(gestionnaireRole);
-
-                        break;
                     default:
-                        Role observateurRole = roleRepository.findByName(Erole.ROLE_OBSERVATEUR)
+                        Role membreRole = roleRepository.findByName(Erole.ROLE_MEMBRE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(observateurRole);
+                        roles.add(membreRole);
                 }
             });
         }
