@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_projet;
 
     @Column(name = "code_projet")

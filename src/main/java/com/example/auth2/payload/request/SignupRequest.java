@@ -20,6 +20,43 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    @NotBlank
+    @Size(max = 120)
+    private String nom_user;
+
+    @NotBlank
+    @Size(max = 120)
+    private String prenom_user;
+
+    @NotBlank
+    @Size(max = 120)
+    private String role_user;
+
+
+    public String getRole_user() {
+        return role_user;
+    }
+
+    public void setRole_user(String role_user) {
+        this.role_user = role_user;
+    }
+
+    public String getNom_user() {
+        return nom_user;
+    }
+
+    public void setNom_user(String nom_user) {
+        this.nom_user = nom_user;
+    }
+
+    public String getPrenom_user() {
+        return prenom_user;
+    }
+
+    public void setPrenom_user(String prenom_user) {
+        this.prenom_user = prenom_user;
+    }
+
     public String getUsername() {
         return username;
     }

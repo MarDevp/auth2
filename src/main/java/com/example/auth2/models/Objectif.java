@@ -8,7 +8,7 @@ import java.sql.Date;
 public class Objectif {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_objectif;
 
     @Column(name = "libele_objectif")
@@ -20,8 +20,8 @@ public class Objectif {
     @Column(name = "id_projet")
     private int id_projet;
 
-    @Column(name = "nature_objectif")
-    private String nature_objectif;
+    @Column(name = "is_global")
+    private int is_global;
 
     public int getId_objectif() {
         return id_objectif;
@@ -55,22 +55,22 @@ public class Objectif {
         this.id_projet = id_projet;
     }
 
-    public String getNature_objectif() {
-        return nature_objectif;
+    public int getIs_global() {
+        return is_global;
     }
 
-    public void setNature_objectif(String nature_objectif) {
-        this.nature_objectif = nature_objectif;
+    public void setIs_global(int is_global) {
+        this.is_global = is_global;
     }
     public Objectif() {
     }
 
-    public Objectif(int id_objectif, String libele_objectif, String description_objectif, int id_projet, String nature_objectif) {
+    public Objectif(int id_objectif, String libele_objectif, String description_objectif, int id_projet, int is_global) {
         this.id_objectif = id_objectif;
         this.libele_objectif = libele_objectif;
         this.description_objectif = description_objectif;
         this.id_projet = id_projet;
-        this.nature_objectif = nature_objectif;
+        this.is_global = is_global;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Objectif {
                 ", libele_objectif='" + libele_objectif + '\'' +
                 ", description_objectif='" + description_objectif + '\'' +
                 ", id_projet=" + id_projet +
-                ", nature_objectif='" + nature_objectif + '\'' +
+                ", isGlobal='" + is_global + '\'' +
                 '}';
     }
 }

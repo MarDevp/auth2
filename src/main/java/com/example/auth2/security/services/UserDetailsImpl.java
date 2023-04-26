@@ -21,18 +21,26 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
+    private String nom_user;
+    private String prenom_user;
+
+    private String role_user;
+
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(int id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities  ,  String nom_user, String prenom_user, String role_user) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.nom_user=nom_user;
+        this.prenom_user=prenom_user;
+        this.role_user=role_user;
     }
 
     //The build method is used to create an instance of UserDetailsImpl from a User object retrieved from the database.
@@ -47,7 +55,31 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities, user.getNom_user(),  user.getPrenom_user(), user.getRole_user());
+    }
+
+    public String getNom_user() {
+        return nom_user;
+    }
+
+    public void setNom_user(String nom_user) {
+        this.nom_user = nom_user;
+    }
+
+    public String getPrenom_user() {
+        return prenom_user;
+    }
+
+    public void setPrenom_user(String prenom_user) {
+        this.prenom_user = prenom_user;
+    }
+
+    public String getRole_user() {
+        return role_user;
+    }
+
+    public void setRole_user(String role_user) {
+        this.role_user = role_user;
     }
 
     @Override

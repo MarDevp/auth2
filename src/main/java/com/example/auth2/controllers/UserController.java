@@ -1,5 +1,6 @@
 package com.example.auth2.controllers;
 
+import com.example.auth2.models.Objectif;
 import com.example.auth2.models.User;
 import com.example.auth2.repository.UserRepository;
 
@@ -46,6 +47,49 @@ public class UserController {
 
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+    //creation
+    @PostMapping("/createUser")
+    public User createUser(@RequestBody User user) {
+        return  userRepository.save(user);
+
+    }
+
+    //suppression
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") int id) {
+        try {
+            userRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //  modification
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody User user) {
+
+        Optional<User> userData = userRepository.findById(id);
+
+        if (userData.isPresent()) {
+            User _user = userData.get();
+
+            _user.setEmail(user.getEmail());
+            _user.setPassword(user.getPassword());
+            _user.setUsername(user.getUsername());
+            _user.setNom_user(user.getNom_user());
+            _user.setPrenom_user(user.getPrenom_user());
+
+
+
+            return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
