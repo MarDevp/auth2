@@ -2,6 +2,8 @@ package com.example.auth2.controllers;
 
 import com.example.auth2.models.Indicateur;
 
+
+import com.example.auth2.models.IndicateurObjectifDTO;
 import com.example.auth2.models.Objectif;
 import com.example.auth2.repository.IndicateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.auth2.controllers.ObjectifController;
+
 
 
 import java.util.ArrayList;
@@ -25,8 +27,7 @@ public class IndicateurController {
     @Autowired
     IndicateurRepository indicateurRepository;
 
-    @Autowired
-    private ObjectifController objectifController;
+
 
 
     //liste des indicateurs
@@ -34,6 +35,17 @@ public class IndicateurController {
     public List<Indicateur> getAllindicateurs() {
 
         return indicateurRepository.findAll();
+    }
+
+    @GetMapping("/indicateur/{id}")
+    public ResponseEntity<Indicateur> getIndicateurById(@PathVariable("id") int id) {
+        Optional<Indicateur> optionalIndicateur = indicateurRepository.findById(id);
+        if (optionalIndicateur.isPresent()) {
+            Indicateur indicateur = optionalIndicateur.get();
+            return new ResponseEntity<>(indicateur, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -88,12 +100,12 @@ public class IndicateurController {
 
 
     // get indicateur by project id
-    @GetMapping("/indicateur_projet/{id}")
+
+  /*  @GetMapping("/indicateur_projet/{id}")
     public List<Indicateur> getIndicateursByProjetId(@PathVariable int id) {
 
         List<Indicateur> resIndicateurs;
         List<Indicateur> listeIndicateurs = new ArrayList<>();;
-        Indicateur ind;
         List<Objectif> listeObjectifs = objectifController.getObjectifsByProjetId(id);
 
         for (Objectif objectif : listeObjectifs) {
@@ -106,13 +118,49 @@ public class IndicateurController {
 
             }
 
-
-        }
-
         return listeIndicateurs;
 
+    }*/
 
+    // liste de tous les indicateurs d'un projets ( indicateurs d'objectifs et indicaterus de résultat
+    @GetMapping("/indicateur_objectif_projet/{id_projet}")
+    public List<Indicateur> getIndicateursObjectifByProjetId(@PathVariable int id_projet) {
+        return indicateurRepository.findByObjectifIdProjet(id_projet);
     }
 
+
+    // liste des indicateurs de resultats d'un projet
+    @GetMapping("/indicateur_resultat_projet/{id_projet}")
+    public List<Indicateur> getIndicateursResultatByProjetId(@PathVariable int id_projet) {
+        return indicateurRepository.findByObjectifIdProjetAndObjres(id_projet,2);
+    }
+
+
+    // liste des indicateurs d'objectifs  d'un projet
+    @GetMapping("/indicateur_objective_projet/{id_projet}")
+    public List<Indicateur> getIndicateursObjectiveByProjetId(@PathVariable int id_projet) {
+        return indicateurRepository.findByObjectifIdProjetAndObjres(id_projet,1);
+    }
+
+
+    // listes des indicateurs d'objectifs by objectif id = liste des indicateurs d'un objectif ou d'un resultat depend de l'id
+    @GetMapping("/indicateurByObjectifId/{id}")
+    public List<Indicateur> getIndicateursByObjectifId(@PathVariable int id) {
+        return indicateurRepository.findByObjectifIdObjectif(id);
+    }
+
+    // avoir le nombre des indicateurs d'un objectif (by objectif_id)
+    @GetMapping("/countIndicateurByObjectifId/{id}")
+    public int CountIndicateursByObjectifId(@PathVariable int id) {
+        List<Indicateur> indicateurs =indicateurRepository.findByObjectifIdObjectif(id);
+        return indicateurs.size();
+    }
+
+    // avoir le nombre de tous les indicateurs d'un projet
+    @GetMapping("/countIndicateurByProjetId/{id}")
+    public int CountIndicateursByProjetId(@PathVariable int id) {
+        List<Indicateur> indicateurs =indicateurRepository.findByObjectifIdProjet(id);
+        return indicateurs.size();
+    }
 
 }

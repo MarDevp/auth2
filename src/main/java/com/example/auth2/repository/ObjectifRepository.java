@@ -13,6 +13,18 @@ import java.util.List;
 public interface ObjectifRepository extends JpaRepository<Objectif,Integer>{
 
 
-    @Query("SELECT o FROM Objectif o WHERE o.id_projet = :id_projet")
-    List<Objectif> findByProjetId(@Param("id_projet") int id_projet);
+
+ //pour les objectifs
+List<Objectif>  findByIdProjetAndIsObjectifIsTrue(int idPojet);
+
+//pour les resultats
+List<Objectif>  findByIdProjetAndIsObjectifIsFalse(int idPojet);
+
+ //pour les resultats par objectif
+ List<Objectif>  findByResIdObjectifAndIsObjectifIsFalse(int idObjectif);
 }
+
+
+
+
+

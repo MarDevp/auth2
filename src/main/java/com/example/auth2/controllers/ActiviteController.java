@@ -2,6 +2,7 @@ package com.example.auth2.controllers;
 
 import com.example.auth2.models.Activite;
 import com.example.auth2.models.Objectif;
+import com.example.auth2.models.Resultat;
 import com.example.auth2.repository.ActiviteRepository;
 import com.example.auth2.repository.ObjectifRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,19 @@ public class ActiviteController {
 
         return activiteRepository.findAll();
     }
+
+    // get activite by id
+    @GetMapping("/activite/{id}")
+    public ResponseEntity<Activite> getActiviteById(@PathVariable("id") int id) {
+        Optional<Activite> activiteData = activiteRepository.findById(id);
+
+        if (activiteData.isPresent()) {
+            return new ResponseEntity<>(activiteData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     //creation
     @PostMapping("/createActivite")

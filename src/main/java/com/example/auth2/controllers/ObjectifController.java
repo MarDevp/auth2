@@ -28,6 +28,17 @@ public class ObjectifController {
         return objectifRepository.findAll();
     }
 
+    // get objectif by id
+    @GetMapping("/objectif/{id}")
+    public ResponseEntity<Objectif> getObjectifById(@PathVariable("id") int id) {
+        Optional<Objectif> optionalObjectif = objectifRepository.findById(id);
+        if (optionalObjectif.isPresent()) {
+            Objectif objectif = optionalObjectif.get();
+            return new ResponseEntity<>(objectif, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     //creation d'un objectif
     @PostMapping("/createObjectif")
@@ -56,11 +67,12 @@ public class ObjectifController {
         if (objectifData.isPresent()) {
             Objectif _objectif = objectifData.get();
             // _project.setCode_projet(project.getCode_projet());
-            _objectif.setLibele_objectif(objectif.getLibele_objectif());
-            _objectif.setDescription_objectif(objectif.getDescription_objectif());
+            _objectif.setLibeleObjectif(objectif.getLibeleObjectif());
+            _objectif.setDescriptionObjectif(objectif.getDescriptionObjectif());
 
             _objectif.setId_projet(objectif.getId_projet());
-            _objectif.setIs_global(objectif.getIs_global());
+            _objectif.setIsGlobal(objectif.getIsGlobal());
+            _objectif.setProjet(objectif.getProjet());
 
 
             return new ResponseEntity<>(objectifRepository.save(_objectif), HttpStatus.OK);
@@ -73,9 +85,42 @@ public class ObjectifController {
     // get objectif by project id
     @GetMapping("/objectif_projet/{id}")
     public List<Objectif> getObjectifsByProjetId(@PathVariable int id) {
-        return objectifRepository.findByProjetId(id);
+        return objectifRepository.findByIdProjetAndIsObjectifIsTrue(id);
     }
 
+    // countobjectifs projets
+    @GetMapping("/count_objectif_projet/{id}")
+    public int coubntObjectifsByProjetId(@PathVariable int id) {
+        List<Objectif> objectifs = objectifRepository.findByIdProjetAndIsObjectifIsTrue(id);
+        return objectifs.size();
+    }
+
+
+    // get resultat by project id
+    @GetMapping("/resultat_projet/{id}")
+    public List<Objectif> getResultatByProjetId(@PathVariable int id) {
+        return objectifRepository.findByIdProjetAndIsObjectifIsFalse(id);
+    }
+
+    @GetMapping("/count_resultat_projet/{id}")
+    public int countResultatsByProjetId(@PathVariable int id) {
+        List<Objectif> objectifs = objectifRepository.findByIdProjetAndIsObjectifIsFalse(id);
+        return objectifs.size();
+    }
+
+    // get resultat by objectif id
+    @GetMapping("/resultat_objectif/{id}")
+    public List<Objectif> getResultatByObjectifId(@PathVariable int id) {
+        return objectifRepository.findByResIdObjectifAndIsObjectifIsFalse(id);
+    }
+
+
+    // get nombre de resultat attendu by objectif id
+    @GetMapping("/count_resultat_objectif/{id}")
+    public int countResultatsByObjectifId(@PathVariable int id) {
+        List<Objectif> objectifs = objectifRepository.findByResIdObjectifAndIsObjectifIsFalse(id);
+        return objectifs.size();
+    }
 
 
 

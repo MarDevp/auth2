@@ -11,7 +11,7 @@ public class IndicateurDP {
     private int id_date_prevue;
 
     @Column(name = "id_indicateur")
-    private int id_indicateur;
+    private int idIndicateur;
 
     @Column(name = "libele_DP")
     private String libele_DP;
@@ -22,18 +22,27 @@ public class IndicateurDP {
     @Column(name = "valeur_cible_date")
     private double valeur_cible_date;
 
+    @Column(name = "valeur_reele")
+    private double valeurReele;
+
+    @Column(name = "date_saisie")
+    private Date dateSaisie;
+
+
 
     public IndicateurDP()
     {
 
     }
 
-    public IndicateurDP(int id_date_prevue, int id_indicateur, String libele_DP, Date date_planification, double valeur_cible_date) {
+    public IndicateurDP(int id_date_prevue, int id_indicateur, String libele_DP, Date date_planification, double valeur_cible_date,double valeurReele,Date dateSaisie ) {
         this.id_date_prevue = id_date_prevue;
-        this.id_indicateur = id_indicateur;
+        this.idIndicateur = id_indicateur;
         this.libele_DP = libele_DP;
         this.date_planification = date_planification;
         this.valeur_cible_date = valeur_cible_date;
+        this.valeurReele=valeurReele;
+        this.dateSaisie=dateSaisie;
     }
 
     public int getId_date_prevue() {
@@ -45,11 +54,11 @@ public class IndicateurDP {
     }
 
     public int getId_indicateur() {
-        return id_indicateur;
+        return idIndicateur;
     }
 
     public void setId_indicateur(int id_indicateur) {
-        this.id_indicateur = id_indicateur;
+        this.idIndicateur = id_indicateur;
     }
 
     public String getLibele_DP() {
@@ -76,5 +85,19 @@ public class IndicateurDP {
         this.valeur_cible_date = valeur_cible_date;
     }
 
+    public double getValeurReele() {
+        return valeurReele;
+    }
 
+    public void setValeurReele(double valeurReele) {
+        this.valeurReele = valeurReele;
+    }
+
+    public Date getDateSaisie() {
+        return dateSaisie;
+    }
+
+    public void setDateSaisie(Date dateSaisie) {
+        this.dateSaisie = dateSaisie;
+    }
 }

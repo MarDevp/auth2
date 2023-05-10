@@ -1,5 +1,6 @@
 package com.example.auth2.controllers;
 import com.example.auth2.models.IndicateurDP;
+import com.example.auth2.models.Project;
 import com.example.auth2.repository.IndicateurDPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,14 @@ public class IndicateurDPController {
 
         return indicateurDPRepository.findAll();
     }
+
+    @GetMapping("/indicateurPlanById_indicateur/{id_indicateur}")
+    public  List<IndicateurDP> getIndicateurPlanById_indicateur(@PathVariable("id_indicateur") int id_indicateur) {
+
+       return indicateurDPRepository.findByIdIndicateur(id_indicateur);
+
+    }
+
 
     //creation
     @PostMapping("/createIndicateurPlan")
@@ -58,6 +67,29 @@ public class IndicateurDPController {
 
             _indicateurDP.setDate_planification(indicateurDP.getDate_planification());
             _indicateurDP.setValeur_cible_date(indicateurDP.getValeur_cible_date());
+            _indicateurDP.setValeurReele(indicateurDP.getValeurReele());
+            _indicateurDP.setDateSaisie(indicateurDP.getDateSaisie());
+
+
+            return new ResponseEntity<>(indicateurDPRepository.save(_indicateurDP), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    //  modification valeur_reele
+    @PutMapping("/updateIndicateurDPValeur_reele/{id}")
+    public ResponseEntity<IndicateurDP> updateIndicateurDPValeur_reele(@PathVariable("id") int id, @RequestBody IndicateurDP indicateurDP) {
+
+        Optional<IndicateurDP> indicateurDPData = indicateurDPRepository.findById(id);
+
+        if (indicateurDPData.isPresent()) {
+            IndicateurDP _indicateurDP = indicateurDPData.get();
+
+
+            _indicateurDP.setValeurReele(indicateurDP.getValeurReele());
+            _indicateurDP.setDateSaisie(indicateurDP.getDateSaisie());
 
 
             return new ResponseEntity<>(indicateurDPRepository.save(_indicateurDP), HttpStatus.OK);

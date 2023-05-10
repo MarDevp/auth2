@@ -2,6 +2,7 @@ package com.example.auth2.controllers;
 
 
 import com.example.auth2.models.Objectif;
+import com.example.auth2.models.Project;
 import com.example.auth2.models.Resultat;
 import com.example.auth2.repository.ResultatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class ResultatController {
 
         return resultatRepository.findAll();
 
+    }
+
+    // get resultat by id
+    @GetMapping("/resultat/{id}")
+    public ResponseEntity<Resultat> getResultatById(@PathVariable("id") int id) {
+        Optional<Resultat> resultatData = resultatRepository.findById(id);
+
+        if (resultatData.isPresent()) {
+            return new ResponseEntity<>(resultatData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -72,11 +85,13 @@ public class ResultatController {
         }
     }
 
-
+/*
     // get resultat by objectif id
     @GetMapping("/resultat_objectif/{id}")
     public List<Resultat> getResultatsByObjectifId(@PathVariable int id) {
         return resultatRepository.findByObjectifId(id);
     }
+*/
 
+    // get resultat by projet id
 }

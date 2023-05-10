@@ -1,6 +1,5 @@
 package com.example.auth2.models;
 import jakarta.persistence.*;
-import java.sql.Date;
 
 
 @Entity
@@ -9,78 +8,125 @@ public class Objectif {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_objectif;
+    private int idObjectif;
 
     @Column(name = "libele_objectif")
-    private String libele_objectif;
+    private String libeleObjectif;
 
     @Column(name = "description_objectif")
-    private String description_objectif;
+    private String descriptionObjectif;
 
     @Column(name = "id_projet")
-    private int id_projet;
+    private int idProjet;
 
     @Column(name = "is_global")
-    private int is_global;
+    private boolean isGlobal;
 
-    public int getId_objectif() {
-        return id_objectif;
+    @Column(name = "is_objectif")
+    private boolean isObjectif;
+
+    @ManyToOne
+    @JoinColumn(name="projet")
+    Project projet;
+
+    @Column(name = "res_id_objectif")
+    private int resIdObjectif;
+
+
+    public int getResIdObjectif() {
+        return resIdObjectif;
     }
 
-    public void setId_objectif(int id_objectif) {
-        this.id_objectif = id_objectif;
+    public void setResIdObjectif(int resIdObjectif) {
+        this.resIdObjectif = resIdObjectif;
     }
 
-    public String getLibele_objectif() {
-        return libele_objectif;
+    public boolean isObjectif() {
+        return isObjectif;
     }
 
-    public void setLibele_objectif(String libele_objectif) {
-        this.libele_objectif = libele_objectif;
+    public void setObjectif(boolean objectif) {
+        isObjectif = objectif;
     }
 
-    public String getDescription_objectif() {
-        return description_objectif;
+    public int getIdObjectif() {
+        return idObjectif;
     }
 
-    public void setDescription_objectif(String description_objectif) {
-        this.description_objectif = description_objectif;
+    public void setIdObjectif(int idObjectif) {
+        this.idObjectif = idObjectif;
+    }
+
+    public String getLibeleObjectif() {
+        return libeleObjectif;
+    }
+
+    public void setLibeleObjectif(String libeleObjectif) {
+        this.libeleObjectif = libeleObjectif;
+    }
+
+    public String getDescriptionObjectif() {
+        return descriptionObjectif;
+    }
+
+    public void setDescriptionObjectif(String descriptionObjectif) {
+        this.descriptionObjectif = descriptionObjectif;
     }
 
     public int getId_projet() {
-        return id_projet;
+        return idProjet;
     }
 
     public void setId_projet(int id_projet) {
-        this.id_projet = id_projet;
+        this.idProjet = id_projet;
     }
 
-    public int getIs_global() {
-        return is_global;
+    public boolean getIsGlobal() {
+        return isGlobal;
     }
 
-    public void setIs_global(int is_global) {
-        this.is_global = is_global;
+    public void setIsGlobal(boolean isGlobal) {
+        this.isGlobal = isGlobal;
     }
+
+    public int getIdProjet() {
+        return idProjet;
+    }
+
+    public void setIdProjet(int idProjet) {
+        this.idProjet = idProjet;
+    }
+
+    public Project getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Project projet) {
+        this.projet = projet;
+    }
+
     public Objectif() {
     }
 
-    public Objectif(int id_objectif, String libele_objectif, String description_objectif, int id_projet, int is_global) {
-        this.id_objectif = id_objectif;
-        this.libele_objectif = libele_objectif;
-        this.description_objectif = description_objectif;
-        this.id_projet = id_projet;
-        this.is_global = is_global;
+    public Objectif(int id_objectif, String libeleObjectif, String descriptionObjectif, int id_projet, boolean is_global , boolean isObjectif, Project projet, int resIdObjectif) {
+        this.idObjectif = id_objectif;
+        this.libeleObjectif = libeleObjectif;
+        this.descriptionObjectif = descriptionObjectif;
+        this.idProjet = id_projet;
+        this.isGlobal = is_global;
+        this.isObjectif=isObjectif;
+        this.projet=projet;
+        this.resIdObjectif=resIdObjectif;
     }
 
     @Override
     public String toString() {
         return "Objectif{" +
-                "id_objectif=" + id_objectif +
-                ", libele_objectif='" + libele_objectif + '\'' +
-                ", description_objectif='" + description_objectif + '\'' +
-                ", id_projet=" + id_projet +
-                ", isGlobal='" + is_global + '\'' +
+                "id_objectif=" + idObjectif +
+                ", libele_objectif='" + libeleObjectif + '\'' +
+                ", description_objectif='" + descriptionObjectif + '\'' +
+                ", id_projet=" + idProjet +
+                ", isGlobal='" + isGlobal + '\'' +
                 '}';
     }
 }

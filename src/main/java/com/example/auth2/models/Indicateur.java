@@ -24,6 +24,11 @@ public class Indicateur {
     @Column(name = "unite_mes_indicateur")
     private String unite_mes_indicateur;
 
+    /*
+    @ManyToOne
+    @JoinColumn(name="objectifsResult")
+*/
+
     @Column(name = "valeur_initiale_indicateur")
     private double valeur_initiale_indicateur;
 
@@ -42,11 +47,17 @@ public class Indicateur {
     @Column(name = "objres")
     private int objres;
 
+
     @Column(name = "id_objres")
     private int id_objres;
 
+    @ManyToOne
+    @JoinColumn(name="objectif")
+        Objectif objectif;
 
-    public Indicateur( int id_indicateur, String libele_indicateur, String description_indicateur, String format_indicateur, String unite_mes_indicateur, double valeur_initiale_indicateur, double valeur_cible_indicateur, Date date_prevu_realisation_indicateur, int tendance_souhaite_hausse, String moyen_verification_indicateur, int objres , int id_objres) {
+
+
+    public Indicateur( int id_indicateur, String libele_indicateur, String description_indicateur, String format_indicateur, String unite_mes_indicateur, double valeur_initiale_indicateur, double valeur_cible_indicateur, Date date_prevu_realisation_indicateur, int tendance_souhaite_hausse, String moyen_verification_indicateur, int objres , int id_objres, Objectif objectif) {
 
         this.id_indicateur=id_indicateur;
         this.libele_indicateur = libele_indicateur;
@@ -59,12 +70,21 @@ public class Indicateur {
         this.tendance_souhaite_hausse = tendance_souhaite_hausse;
         this.moyen_verification_indicateur = moyen_verification_indicateur;
         this.objres=objres;
+        this.objectif=objectif;
 
     }
 
     public Indicateur()
     {
 
+    }
+
+    public Objectif getObjectif() {
+        return objectif;
+    }
+
+    public void setObjectif(Objectif objectif) {
+        this.objectif = objectif;
     }
 
     public int getObjres() {
